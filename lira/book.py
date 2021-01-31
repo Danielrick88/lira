@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from collections import namedtuple
 import yaml
 
 from lira.parsers.rst import RSTParser
@@ -134,6 +134,7 @@ class Book:
         for key, val in yaml_data.items():
             if key in self.meta_spec:
                 metadata[key] = val
+        metadata = namedtuple('metadata', metadata.keys())(*metadata.values())
         return metadata
 
     def _parse_chapters(self, contents, parse_chapter=False):
